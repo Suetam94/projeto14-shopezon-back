@@ -4,13 +4,11 @@ const cors = require("cors");
 const router = require("./routes/routes");
 const { errorHandler } = require("./middlewares/errorMiddleware");
 const mongoConn = require("./database/mongoConn");
-const authHandler = require("./middlewares/authMiddleware");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(router);
-app.use(authHandler);
 app.use(errorHandler);
 
 mongoConn();

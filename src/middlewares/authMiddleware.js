@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../database/models/UserSchema");
 
 const authHandler = async (req, res, next) => {
-  const { authorization } = req.headers.authorization;
+  const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith("Bearer ")) {
     res.status(401);
@@ -13,14 +13,14 @@ const authHandler = async (req, res, next) => {
 
   const token = authorization.split("Bearer ")[1];
 
-  const userId = jwt.verify(token, process.env.JWT_SECRET, "", "");
+  const tokenPayload = jwt.verify(token, process.env.JWT_SECRET, "", "");
 
-  if (!userId) {
+  if (!tokenPayload) {
     res.status(401);
     throw new Error("Not authorized");
   }
 
-  req.user = await User.findById(userId).select("-password");
+  req.user = await User.findById(tokenPayload.userId).select("-password");
 
   return next();
 };
