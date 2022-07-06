@@ -1,4 +1,6 @@
 const asyncHandler = require("express-async-handler");
+const CreateUserValidator = require("../../utils/user/CreateUserValidator");
+const CreateUserUseCase = require("../../useCases/user/CreateUserUseCase");
 
 const CreateUserController = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -8,9 +10,20 @@ const CreateUserController = asyncHandler(async (req, res) => {
     throw new Error("Fields name, email and password must be provided");
   }
 
-  //TODO CreateUserUseCase
+  try {
+    const validateUserData = await CreateUserValidator({
+      name,
+      email,
+      password,
+    });
 
-  return res.status(201).json({ name, email, password }).send();
+    const user = await CreateUserUseCase(validateUserData);
+
+    return res.status(201).json(user).send();
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: e.message }).send();
+  }
 });
 
 module.exports = CreateUserController;
