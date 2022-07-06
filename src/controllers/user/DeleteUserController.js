@@ -1,14 +1,17 @@
 const asyncHandler = require("express-async-handler");
+const DeleteUserUseCase = require("../../useCases/user/DeleteUserUseCase");
 
 const DeleteUserController = asyncHandler(async (req, res) => {
-  const { id } = req;
+  const { user } = req;
 
-  if (!id) {
-    res.status(400);
-    throw new Error("No user found");
+  try {
+    const deletedUser = await DeleteUserUseCase(user._id);
+
+    return res.status(200).json(deletedUser).send();
+  } catch (e) {
+    console.log(e);
+    res.status(404).json({ message: e.message }).send();
   }
-
-  return res.status(200).json({ id }).send();
 });
 
 module.exports = DeleteUserController;
