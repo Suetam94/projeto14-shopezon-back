@@ -4,6 +4,12 @@ const User = require("../../database/models/UserSchema");
 const CreateUserUseCase = async (userRequestData) => {
   const { name, email, password } = userRequestData;
 
+  const userAlreadyExists = await User.findOne({ email });
+
+  if (userAlreadyExists) {
+    throw new Error("User already exists");
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = new User({
