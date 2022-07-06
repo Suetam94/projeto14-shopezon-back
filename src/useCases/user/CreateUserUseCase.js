@@ -3,7 +3,7 @@ const generateUserToken = require("../../utils/user/GenerateToken");
 const User = require("../../database/models/UserSchema");
 
 const CreateUserUseCase = async (userRequestData) => {
-  const { name, email, password } = userRequestData;
+  const { name, email, password, isAdmin } = userRequestData;
 
   const userAlreadyExists = await User.findOne({ email });
 
@@ -17,6 +17,7 @@ const CreateUserUseCase = async (userRequestData) => {
     name,
     email,
     password: hashedPassword,
+    isAdmin
   });
 
   await user.save();
