@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const generateUserToken = require("../../utils/user/GenerateToken");
 const User = require("../../database/models/UserSchema");
 
 const CreateUserUseCase = async (userRequestData) => {
@@ -24,6 +25,7 @@ const CreateUserUseCase = async (userRequestData) => {
     _id: user._id,
     name: user.name,
     email: user.email,
+    token: generateUserToken(user._id),
     createdAt: user.createdAt,
   };
 };
