@@ -1,14 +1,9 @@
 const asyncHandler = require("express-async-handler");
 
 const GetUserController = asyncHandler(async (req, res) => {
-  const { id } = req;
+  const { user } = req;
 
-  if (!id) {
-    res.status(400);
-    throw new Error("No user found");
-  }
-
-  return res.status(200).json({ id }).send();
+  return res.status(200).json(user).send();
 });
 
 module.exports = GetUserController;
