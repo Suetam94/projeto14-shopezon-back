@@ -27,7 +27,7 @@ const CreateUserUseCase = async (userRequestData) => {
     name: user.name,
     email: user.email,
     isAdmin: user.isAdmin,
-    token: generateUserToken(user._id),
+    token: generateUserToken(user._id, user.isAdmin),
     createdAt: user.createdAt,
   };
 };

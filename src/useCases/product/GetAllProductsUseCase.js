@@ -1,7 +1,7 @@
 const Product = require("../../database/models/ProductSchema");
 
 const GetAllProductsUseCase = () => {
-    return Product.find({})
-}
+  return Product.find({});
+};
 
 module.exports = GetAllProductsUseCase;

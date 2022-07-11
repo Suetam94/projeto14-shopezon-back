@@ -8,14 +8,12 @@ const LoginUserUseCase = async (userRequestData) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    res.status(401);
     throw new Error("User with this email not founded");
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    res.status(401);
     throw new Error("Credentials are not valid");
   }
 
@@ -24,7 +22,7 @@ const LoginUserUseCase = async (userRequestData) => {
     name: user.name,
     email: user.email,
     isAdmin: user.isAdmin,
-    token: generateUserToken(user._id),
+    token: generateUserToken(user._id, user.isAdmin),
   };
 };
 

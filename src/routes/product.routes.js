@@ -9,7 +9,7 @@ const productRouter = Router();
 
 productRouter.post("/create", CreateProductController);
 productRouter.get("/all", GetAllProductsController);
-productRouter.get("/product/:productId",GetProductController )
+productRouter.get("/product/:productId", GetProductController);
 productRouter.put("/product/:productId", UpdateProductController);
 productRouter.delete("/product/:productId", DeleteProductController);
 

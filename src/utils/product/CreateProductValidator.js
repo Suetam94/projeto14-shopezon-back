@@ -5,7 +5,7 @@ const CreateProductValidator = async (productRequestData) => {
     name: joi.string().min(3).required(),
     price: joi.number().required(),
     description: joi.string().min(10).required(),
-    imgUrl: joi.string().uri().required()
+    imgUrl: joi.string().uri().required(),
   });
 
   return validatorSchema.validateAsync(productRequestData);

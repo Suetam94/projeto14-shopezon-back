@@ -10,6 +10,10 @@ const ProductSchema = new Schema(
       type: Number,
       require: [true, "Product price is required"],
     },
+    stock: {
+      type: Number,
+      require: [true, "Product price is required"],
+    },
     description: {
       type: String,
       require: [true, "Product description is required"],

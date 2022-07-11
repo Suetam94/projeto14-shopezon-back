@@ -3,7 +3,7 @@ const CreateUserValidator = require("../../utils/user/CreateUserValidator");
 const CreateUserUseCase = require("../../useCases/user/CreateUserUseCase");
 
 const CreateUserController = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, isAdmin } = req.body;
 
   if (!name || !email || !password) {
     res.status(400);
@@ -15,6 +15,7 @@ const CreateUserController = asyncHandler(async (req, res) => {
       name,
       email,
       password,
+      isAdmin
     });
 
     const user = await CreateUserUseCase(validateUserData);
