@@ -1,11 +1,16 @@
 const asyncHandler = require("express-async-handler");
+const DeleteProductUseCase = require("../../useCases/product/DeleteProductUseCase")
 
 const DeleteProductController = asyncHandler(async (req, res) => {
-  const { id } = req;
+  const { id } = req.body;
+  
+  try {
+    const deleteProduct = await DeleteProductUseCase(id);
 
-  if (!id) {
-    res.status(400);
-    throw new Error("No Product found");
+    return res.status(200).json(deleteProduct).send();
+  } catch (e) {
+    console.log(e);
+    res.status(404).json({message: e.message}).send();
   }
 
   return res.status(200).json({ id }).send();
