@@ -1,14 +1,17 @@
 const asyncHandler = require("express-async-handler");
+const GetProductUseCase = require("../../useCases/product/GetProductUseCase")
 
 const GetProductController = asyncHandler(async (req, res) => {
-  const { id } = req;
+  const { productId } = req.params;
 
-  if (!id) {
-    res.status(400);
-    throw new Error("No Product found");
+  try{
+    const productFound = await GetProductUseCase(productId);
+
+    return res.status(200).json(productFound).send();  
+  }catch (e){
+    console.log(e);
+    res.status(404).json({message: e.message}).send();
   }
-
-  return res.status(200).json({ id }).send();
 });
 
 module.exports = GetProductController;
