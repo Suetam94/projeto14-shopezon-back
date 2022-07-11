@@ -3,12 +3,14 @@ const CreateProductController = require("../controllers/product/CreateProductCon
 const GetProductController = require("../controllers/product/GetProductController");
 const UpdateProductController = require("../controllers/product/UpdateProductController");
 const DeleteProductController = require("../controllers/product/DeleteProductController");
+const GetAllProductsController = require("../controllers/product/GetAllProductController");
 
 const productRouter = Router();
 
 productRouter.post("/create", CreateProductController);
-productRouter.get("/product", GetProductController);
-productRouter.put("/product", UpdateProductController);
-productRouter.delete("/product", DeleteProductController);
+productRouter.get("/all", GetAllProductsController);
+productRouter.get("/product/:productId",GetProductController )
+productRouter.put("/product/:productId", UpdateProductController);
+productRouter.delete("/product/:productId", DeleteProductController);
 
 module.exports = productRouter;

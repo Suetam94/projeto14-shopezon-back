@@ -2,10 +2,10 @@ const asyncHandler = require("express-async-handler");
 const DeleteProductUseCase = require("../../useCases/product/DeleteProductUseCase")
 
 const DeleteProductController = asyncHandler(async (req, res) => {
-  const { id } = req.body;
-  
+  const { productId } = req.params;
+
   try {
-    const deleteProduct = await DeleteProductUseCase(id);
+    const deleteProduct = await DeleteProductUseCase(productId);
 
     return res.status(200).json(deleteProduct).send();
   } catch (e) {
@@ -13,7 +13,6 @@ const DeleteProductController = asyncHandler(async (req, res) => {
     res.status(404).json({message: e.message}).send();
   }
 
-  return res.status(200).json({ id }).send();
 });
 
 module.exports = DeleteProductController;

@@ -1,14 +1,18 @@
 const asyncHandler = require("express-async-handler");
+const UpdateProductUseCase = require("../../useCases/product/UpdateProductUseCase");
 
 const UpdateProductController = asyncHandler(async (req, res) => {
-  const { id } = req;
+  const { productId } = req.params;
+  const dataUpdate = req.body;
 
-  if (!id) {
-    res.status(400);
-    throw new Error("No Product found");
+  try {
+    const updatedProduct = await UpdateProductUseCase(productId, dataUpdate);
+
+    return res.status(200).json(updatedProduct).send();
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: e.message }).send();
   }
-
-  return res.status(200).json({ id }).send();
 });
 
 module.exports = UpdateProductController;
